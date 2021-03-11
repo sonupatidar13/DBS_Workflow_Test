@@ -1,0 +1,46 @@
+package seleniumFirstProject;
+
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class SeleniumFirstTest {
+WebDriver driver;
+
+public void launchBrowser() {
+	System.setProperty("webdriver.chrome.driver", "/Users/vishwa/Documents/Installer/Drivers/chromedriver");
+	WebDriver driver=new ChromeDriver();
+	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	driver.get("https://www.amazon.com/");
+    driver.manage().window().maximize();
+
+	/*driver.findElement(By.xpath("//a[@aria-label='Open Menu']")).click();
+	driver.findElement(By.xpath("//a//div[text()='Electronics']")).click();
+	driver.findElement(By.xpath("//li//a[text()='Television & Video']")).click();
+	driver.findElement(By.xpath("//a//span[text()='Televisions']")).click();
+	driver.findElement(By.xpath("//span[text()='32 Inches & Under']//parent::a//div//i[@class=\"a-icon a-icon-checkbox\"]")).click();
+	driver.findElement(By.xpath("//span[@id='a-autoid-0-announce']")).click();
+	driver.findElement(By.xpath("//a[text()='Price: High to Low']")).click();
+	System.out.println(driver.findElements(By.xpath("//a[@class='a-link-normal a-text-normal']")).size());*/
+	
+}
+
+public WebElement expandRootElement(WebElement element) {
+	WebElement ele = (WebElement) ((JavascriptExecutor) driver)
+.executeScript("return arguments[0].shadowRoot",element);
+	return ele;
+}
+
+	public static void main(String[] args) {
+		
+		SeleniumFirstTest obj = new SeleniumFirstTest();
+		obj.launchBrowser();
+
+	}
+
+}

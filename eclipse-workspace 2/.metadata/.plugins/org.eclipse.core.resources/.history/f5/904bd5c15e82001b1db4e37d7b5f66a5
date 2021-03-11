@@ -1,0 +1,69 @@
+package seleniumFirstProject;
+
+
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.junit.Assert;  
+
+
+
+public class SeleniumFirstTest {
+//WebDriver driver;
+
+
+	//@Given("^End to End DBS Test$")
+	public static void main(String []args) {
+	System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+	WebDriver driver=new ChromeDriver();
+	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	driver.get("https://www.dbs.com.sg/personal/default.page");
+
+	driver.manage().window().maximize();
+
+	driver.findElement(By.xpath("//div[@id='flpHeader']//a[text()='Cards']")).click();
+    Actions actions = new Actions(driver);
+    WebElement element = driver.findElement(By.xpath("//a[@href='/personal/cards/cards-comparator.page']"));
+    actions.moveToElement(element).click().perform();
+
+	
+	driver.findElement(By.xpath("//a[@href='/personal/cards/cards-comparator.page']")).click();
+	
+	
+    driver.findElement(By.xpath("//input[@id='cb0']//following-sibling::label//span")).click();
+    
+
+    
+    JavascriptExecutor js = (JavascriptExecutor) driver;    
+    js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+    
+    driver.findElement(By.xpath("//input[@id='cb14']//following-sibling::label//span")).click();
+  	driver.findElement(By.id("cardCompareBtn")).click();
+  	System.out.println("test1");
+
+  	
+  	WebElement elementt = driver.findElement(By.xpath("(//div[@id='card0']//div[@class='sub-header'])[1]"));
+  	System.out.println("test1");
+
+    js.executeScript("arguments[0].scrollIntoView(true);", elementt);
+  	System.out.println("test1");
+
+  	Assert.assertEquals("It's the fastest way to fly anywhere",driver.findElement(By.xpath("(//div[@id='card0']//div[@class='sub-header'])[1]")).getText());
+  	System.out.println("test1");
+
+  	Assert.assertEquals("VISA",driver.findElement(By.xpath("(//div[@id='card0']//div[@class='sub-header'])[2]")).getText());
+  	Assert.assertEquals("S$30,000",driver.findElement(By.xpath("(//div[@id='card0']//div[@class='sub-header'])[3]")).getText());
+  	Assert.assertEquals("S$45,000",driver.findElement(By.xpath("(//div[@id='card0']//div[@class='sub-header'])[4]")).getText());
+  	Assert.assertEquals("1 Year",driver.findElement(By.xpath("(//div[@id='card0']//div[@class='sub-header'])[5]")).getText());
+    Assert.assertEquals("The only Credit Card that helps you give back while you spend	Z",driver.findElement(By.xpath("(//div[@id='card13']//div[@class='sub-header'])[1]")).getText());
+  	Assert.assertEquals("VISA",driver.findElement(By.xpath("(//div[@id='card13']//div[@class='sub-header'])[2]")).getText());
+  	Assert.assertEquals("S$30,000",driver.findElement(By.xpath("(//div[@id='card13']//div[@class='sub-header'])[3]")).getText());
+  	Assert.assertEquals("S$45,000",driver.findElement(By.xpath("(//div[@id='card13']//div[@class='sub-header'])[4]")).getText());
+  	Assert.assertEquals("No annual fee, so long as you remain a member of NUSS",driver.findElement(By.xpath("(//div[@id='card13']//div[@class='sub-header'])[5]")).getText());
+  	System.out.println("test");
+}
+}

@@ -1,0 +1,156 @@
+package seleniumFirstProject;
+
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait; 
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+
+
+
+public class SeleniumFirstTest {
+WebDriver driver;
+
+public void launchBrowser()throws Exception {
+	System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+	WebDriver driver=new ChromeDriver();
+	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	driver.get("https://www.dbs.com/default.page");
+
+	driver.manage().window().maximize();
+	driver.findElement(By.xpath("//div[@id='promotionBox']//li[@data-slide-to='3']")).click();
+	
+	//driver.findElement(By.xpath("//div[@class='promotion-content no-dynamic-js-handle']//h1[text()='DBS Stronger Together Fund']"));
+	
+	//WebDriverWait wait = new WebDriverWait(driver, 10);
+	//wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='promotion-content no-dynamic-js-handle']//h1[text()='DBS Stronger Together Fund']")));
+	//WebDriverWait wait = new WebDriverWait(driver,30);
+	//wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(),'COMPOSE')]")));
+
+	driver.findElement(By.xpath("//div[@class='promotion-content no-dynamic-js-handle']//h1[text()='DBS Stronger Together Fund']/following-sibling::button[@class='btn btn-primary'][text()='Learn More']")).click();
+	
+    driver.findElement(By.xpath("//a[@class='nav-link hasDevice'][text()='Singapore']")).click();
+    
+    
+    String beforeXpath_col1 = "//table//tbody//tr[";
+    String afterXpath_col1 = "]//td[1]";
+
+    
+    String beforeXpath_col2 = "//table//tbody//tr[";
+    String afterXpath_col2 = "]//td[2]";
+    
+    
+    String beforeXpath_col3 = "//table//tbody//tr[";
+    String afterXpath_col3 = "]//td[3]";
+    
+    String beforeXpath_col4 = "//table//tbody//tr[";
+    String afterXpath_col4 = "]//td[4]";
+    
+    String beforeXpath_col5 = "//table//tbody//tr[";
+    String afterXpath_col5 = "]//td[5]";
+    
+    int rowCount = driver.findElements(By.xpath("//table//tr")).size();
+    
+	System.out.println("TEST1");
+
+    
+    //File source = new File("/Users/vishwa/Desktop/Sonu/Automation/RobotAutomation/API/Qatar/Test Data/UI_Sample.xlsx");
+    String path = "/Users/vishwa/Desktop/Sonu/Automation/RobotAutomation/API/Qatar/Test Data/UI_Sample.xlsx";
+
+    
+    FileInputStream input = new FileInputStream(path);
+    
+	System.out.println("TEST2");
+
+    
+    Workbook wb = new XSSFWorkbook(input);
+	System.out.println("TEST3");
+
+    Sheet sheet = wb.getSheetAt(0);
+	sheet.getRow(0).createCell(1).setCellValue("PASS");
+	
+	FileOutputStream output=new FileOutputStream(path);
+	wb.write(output);
+	wb.close();
+
+    
+	System.out.println("TEST4");
+
+    
+    
+    //FileOutputStream fos = null;
+    //XSSFWorkbook workbook = new XSSFWorkbook(fis);
+    //XSSFSheet sheet = workbook.createSheet("test");
+    
+    //XSSFRow row = null;
+    //XSSFCell cell = null;
+
+    //XlsReader reader = new XlsReader("/Users/vishwa/Desktop/Sonu/Automation/RobotAutomation/API/Qatar/Test Data/UI_Sample.xlsx");
+    
+    for(int i=1; i<rowCount; i++) {
+    	String actualXpath_col1 = beforeXpath_col1+i+afterXpath_col1;
+    	String col1 = driver.findElement(By.xpath(actualXpath_col1)).getText();
+    	System.out.println(col1);
+    	sheet.getRow(0).createCell(1).setCellValue(col1);
+    	
+    	String actualXpath_col2 = beforeXpath_col2+i+afterXpath_col2;
+    	String col2 = driver.findElement(By.xpath(actualXpath_col2)).getText();
+    	System.out.println(col2);
+
+    	
+    	String actualXpath_col3 = beforeXpath_col3+i+afterXpath_col3;
+    	String col3 = driver.findElement(By.xpath(actualXpath_col3)).getText();
+    	System.out.println(col3);
+
+    	
+    	String actualXpath_col4 = beforeXpath_col4+i+afterXpath_col4;
+    	String col4 = driver.findElement(By.xpath(actualXpath_col4)).getText();
+    	System.out.println(col4);
+
+    	
+    	String actualXpath_col5 = beforeXpath_col5+i+afterXpath_col5;
+    	String col5 = driver.findElement(By.xpath(actualXpath_col5)).getText();
+    	System.out.println(col5);
+
+    }
+    
+	/*driver.findElement(By.xpath("//a//div[text()='Electronics']")).click();
+	driver.findElement(By.xpath("//li//a[text()='Television & Video']")).click();
+	driver.findElement(By.xpath("//a//span[text()='Televisions']")).click();
+	driver.findElement(By.xpath("//span[text()='32 Inches & Under']//parent::a//div//i[@class=\"a-icon a-icon-checkbox\"]")).click();
+	driver.findElement(By.xpath("//span[@id='a-autoid-0-announce']")).click();
+	driver.findElement(By.xpath("//a[text()='Price: High to Low']")).click();
+	System.out.println(driver.findElements(By.xpath("//a[@class='a-link-normal a-text-normal']")).size());*/
+	
+}
+
+	public static void main(String[] args) throws Exception {
+		
+		SeleniumFirstTest obj = new SeleniumFirstTest();
+		obj.launchBrowser();
+		
+		
+	}
+
+}
